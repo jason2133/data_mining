@@ -4,10 +4,17 @@
 - [Book](http://www.yes24.com/Product/Goods/107892918)
 - Lecture by Prof. Hyungjun Cho, Department of Statistics, Korea University
 
+## Course
 |Chapter|Contents|
 |:------:|:-----:|
 |1|Introduction to Data Mining|
 |2|Data|
 |3|Statistical Learning|
 |4|Association Analysis|
+
+## Assignment
+|Num|Assignment|
+|:------:|:-----:|
+|1|Association Analysis|
+
 
