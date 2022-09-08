@@ -9,4 +9,5 @@
 |1|Introduction to Data Mining|
 |2|Data|
 |3|Statistical Learning|
+|4|Association Analysis|
 
