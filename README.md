@@ -4,7 +4,7 @@
 - [Book](http://www.yes24.com/Product/Goods/107892918)
 - Lecture by Prof. Hyungjun Cho, Department of Statistics, Korea University
 
-## Course
+## Lecture
 |Chapter|Contents|
 |:------:|:-----:|
 |1|Introduction to Data Mining|
