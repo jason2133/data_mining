@@ -5,6 +5,8 @@
 ###################################################
 
 ## Calling libraries
+# install.packages("arules")
+# install.packages("arulesViz")
 
 library(arules) #install.packages("arules")
 library(arulesViz) #install.packages("arulesViz") 
@@ -12,7 +14,9 @@ library(arulesViz) #install.packages("arulesViz")
 
 ## Reading data
 
-Grocery = read.transactions("Grocery.csv", format = "single", cols = c(1,3), sep=",", skip=1, rm.duplicate=TRUE)
+# C:/Users/jason/πŸ≈¡ »≠∏È/coding1/data_mining/ch4
+
+Grocery = read.transactions("C:/Users/jason/πŸ≈¡ »≠∏È/coding1/data_mining/ch4/Grocery.csv", format = "single", cols = c(1,3), sep=",", skip=1, rm.duplicate=TRUE)
 inspect(Grocery)
 
 str(Grocery)
