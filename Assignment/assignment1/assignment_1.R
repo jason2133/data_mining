@@ -20,11 +20,19 @@ as(BNKSERV, "data.frame")[10:20,]
 rules = apriori(BNKSERV, parameter=list(support=0.1, confidence=0.7, minlen=2), control=list(verbose=F))
 rules.sorted = sort(rules, by=c("support","lift")) #sorting data
 inspect(rules.sorted)
+rules.sorted
 
-# rules.sub = subset(rules, subset = rhs %in% "heineken" & lift > 1) 
-# inspect(rules.sub)
+rules.cking.svg = subset(rules, subset = lhs %in% 'CKING' & rhs %in% 'SVG')
+inspect(rules.cking.svg)
 
-# rules.sub = subset(rules, subset = lhs %in% "heineken" & lift > 1) 
+rules.svg = subset(rules, subset = rhs %in% 'SVG')
+inspect(rules.cking.svg)
+
+
+rules.sub = subset(rules, subset = rhs %in% "CKING" & lift > 1) 
+inspect(rules.sub)
+
+# rules.sub = subset(rules, subset = lhs %in% "CKING" & lift > 1) 
 # inspect(rules.sub)
 
 # Plot
