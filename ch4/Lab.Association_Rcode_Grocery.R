@@ -28,20 +28,27 @@ as(Grocery, "data.frame")[1:10,]
 rules = apriori(Grocery, parameter=list(support=0.1, confidence=0.7, minlen=2), control=list(verbose=F))
 rules.sorted = sort(rules, by=c("support","lift")) #sorting data
 inspect(rules.sorted)
+# Support - Confidence - Coverage - Lift - Count
+# Coverage : Probability of Incident A
 
 
 ## Generating a subset of rules
 
+# rhs : heineken in B (Right)
 rules.sub = subset(rules, subset = rhs %in% "heineken" & lift > 1) 
 inspect(rules.sub)
 
+# lhs : heineken in A (Left)
 rules.sub = subset(rules, subset = lhs %in% "heineken" & lift > 1) 
 inspect(rules.sub)
 
 
 ## Plotting
 
+# Overall things
 plot(rules)
+
+
 plot(rules, measure = c("support", "lift"), shading = "confidence")
 
 
