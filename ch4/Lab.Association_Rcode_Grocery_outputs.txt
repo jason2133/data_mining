@@ -1,0 +1,127 @@
+> ###################################################
+> #
+> # Example: Association Analysis with Grocery Data 
+> #
+> ###################################################
+> 
+> ## Calling libraries
+> 
+> library(arules) #install.packages("arules")
+> library(arulesViz) #install.packages("arulesViz") 
+> 
+> 
+> ## Reading data
+> 
+> Grocery = read.transactions("Grocery.csv", format = "single", cols = c(1,3), sep=",", skip=1, rm.duplicate=TRUE)
+> inspect(Grocery)
+       items                                                         transactionID
+[1]    {bourbon,corned_b,ham,hering,ice_crea,olives,turkey}          0            
+[2]    {baguette,corned_b,cracker,heineken,hering,olives,soda}       1            
+[3]    {apples,avocado,baguette,peppers,sardines,steak,turkey}       10           
+[4]    {apples,avocado,baguette,coke,peppers,sardines,soda}          100          
+[5]    {apples,bourbon,corned_b,heineken,hering,olives,steak}        1000         
+[6]    {corned_b,ham,hering,ice_crea,olives,peppers,turkey}          101      
+
+> str(Grocery)
+Formal class 'transactions' [package "arules"] with 3 slots
+  ..@ data       :Formal class 'ngCMatrix' [package "Matrix"] with 5 slots
+  .. .. ..@ i       : int [1:6938] 5 8 10 12 13 14 19 3 8 9 ...
+  .. .. ..@ p       : int [1:1002] 0 7 14 21 28 35 42 48 55 62 ...
+  .. .. ..@ Dim     : int [1:2] 20 1001
+  .. .. ..@ Dimnames:List of 2
+  .. .. .. ..$ : NULL
+  .. .. .. ..$ : NULL
+  .. .. ..@ factors : list()
+  ..@ itemInfo   :'data.frame': 20 obs. of  1 variable:
+  .. ..$ labels: chr [1:20] "apples" "artichok" "avocado" "baguette" ...
+  ..@ itemsetInfo:'data.frame': 1001 obs. of  1 variable:
+  .. ..$ transactionID: chr [1:1001] "0" "1" "10" "100" ...
+> as(Grocery, "data.frame")[1:10,]
+                                                       items transactionID
+1       {bourbon,corned_b,ham,hering,ice_crea,olives,turkey}             0
+2    {baguette,corned_b,cracker,heineken,hering,olives,soda}             1
+3    {apples,avocado,baguette,peppers,sardines,steak,turkey}            10
+4       {apples,avocado,baguette,coke,peppers,sardines,soda}           100
+5     {apples,bourbon,corned_b,heineken,hering,olives,steak}          1000
+6       {corned_b,ham,hering,ice_crea,olives,peppers,turkey}           101
+7                {bourbon,corned_b,ham,hering,olives,turkey}           102
+8   {baguette,cracker,heineken,hering,peppers,sardines,soda}           103
+9  {artichok,avocado,corned_b,cracker,ham,heineken,sardines}           104
+10        {apples,baguette,corned_b,ham,hering,olives,steak}           105
+
+
+> ## Generating rules
+> 
+> rules = apriori(Grocery, parameter=list(support=0.1, confidence=0.7, minlen=2), control=list(verbose=F))
+> rules.sorted = sort(rules, by=c("support","lift")) #sorting data
+> inspect(rules.sorted)
+      lhs                                     rhs        support   confidence coverage  lift     count
+[1]   {cracker}                            => {heineken} 0.3656344 0.7500000  0.4875125 1.251250 366  
+[2]   {soda}                               => {heineken} 0.2567433 0.8081761  0.3176823 1.348307 257  
+[3]   {artichok}                           => {heineken} 0.2517483 0.8262295  0.3046953 1.378426 252  
+[4]   {soda}                               => {cracker}  0.2507493 0.7893082  0.3176823 1.619052 251  
+[5]   {heineken,soda}                      => {cracker}  0.2337662 0.9105058  0.2567433 1.867656 234  
+[6]   {cracker,soda}                       => {heineken} 0.2337662 0.9322709  0.2507493 1.555339 234  
+[7]   {turkey}                             => {olives}   0.2207792 0.7809187  0.2827173 1.652642 221  
+[8]   {ice_crea}                           => {coke}     0.2197802 0.7028754  0.3126873 2.376954 220  
+[9]   {coke}                               => {ice_crea} 0.2197802 0.7432432  0.2957043 2.376954 220  
+[10]  {heineken,hering}                    => {baguette} 0.2137862 0.7430556  0.2877123 1.897445 214  
+[11]  {baguette,heineken}                  => {hering}   0.2137862 0.8199234  0.2607393 1.688772 214  
+[12]  {baguette,hering}                    => {heineken} 0.2137862 0.8594378  0.2487512 1.433829 214  
+[13]  {hering,olives}                      => {corned_b} 0.2017982 0.7890625  0.2557443 2.020081 202  
+[14]  {corned_b,olives}                    => {hering}   0.2017982 0.8523207  0.2367632 1.755500 202  
+[15]  {corned_b,hering}                    => {olives}   0.2017982 0.8244898  0.2447552 1.744850 202  
+
+
+> rules.sub = subset(rules, subset = rhs %in% "heineken" & lift > 1) 
+> inspect(rules.sub)
+     lhs                                 rhs        support   confidence coverage  lift     count
+[1]  {artichok}                       => {heineken} 0.2517483 0.8262295  0.3046953 1.378426 252  
+[2]  {soda}                           => {heineken} 0.2567433 0.8081761  0.3176823 1.348307 257  
+[3]  {cracker}                        => {heineken} 0.3656344 0.7500000  0.4875125 1.251250 366  
+[4]  {coke,sardines}                  => {heineken} 0.1198801 0.8163265  0.1468531 1.361905 120  
+[5]  {ice_crea,sardines}              => {heineken} 0.1228771 0.8145695  0.1508492 1.358974 123  
+[6]  {chicken,sardines}               => {heineken} 0.1188811 0.8814815  0.1348651 1.470605 119  
+[7]  {chicken,coke}                   => {heineken} 0.1178821 0.8489209  0.1388611 1.416283 118  
+[8]  {artichok,ham}                   => {heineken} 0.1128871 0.8828125  0.1278721 1.472826 113  
+[9]  {artichok,avocado}               => {heineken} 0.1988012 0.9431280  0.2107892 1.573452 199  
+[10] {artichok,baguette}              => {heineken} 0.1228771 0.9111111  0.1348651 1.520037 123  
+[11] {artichok,hering}                => {heineken} 0.1298701 0.8280255  0.1568432 1.381423 130  
+[12] {artichok,cracker}               => {heineken} 0.1438561 0.9171975  0.1568432 1.530191 144  
+[13] {avocado,ham}                    => {heineken} 0.1168831 0.8478261  0.1378621 1.414457 117  
+[14] {cracker,ham}                    => {heineken} 0.1258741 0.8400000  0.1498501 1.401400 126  
+[15] {chicken,ice_crea}               => {heineken} 0.1188811 0.8500000  0.1398601 1.418083 119  
+[16] {baguette,soda}                  => {heineken} 0.1378621 0.9019608  0.1528472 1.504771 138  
+[17] {bourbon,soda}                   => {heineken} 0.1238761 0.8000000  0.1548452 1.334667 124  
+[18] {olives,soda}                    => {heineken} 0.1268731 0.7696970  0.1648352 1.284111 127  
+[19] {hering,soda}                    => {heineken} 0.1488511 0.8563218  0.1738262 1.428630 149  
+
+
+> rules.sub = subset(rules, subset = lhs %in% "heineken" & lift > 1) 
+> inspect(rules.sub)
+     lhs                                     rhs        support   confidence coverage  lift     count
+[1]  {coke,heineken}                      => {ice_crea} 0.1388611 0.7988506  0.1738262 2.554790 139  
+[2]  {heineken,ice_crea}                  => {coke}     0.1388611 0.7554348  0.1838162 2.554697 139  
+[3]  {artichok,heineken}                  => {avocado}  0.1988012 0.7896825  0.2517483 2.177609 199  
+[4]  {avocado,heineken}                   => {artichok} 0.1988012 0.7991968  0.2487512 2.622938 199  
+[5]  {ham,heineken}                       => {cracker}  0.1258741 0.7241379  0.1738262 1.485373 126  
+[6]  {heineken,soda}                      => {cracker}  0.2337662 0.9105058  0.2567433 1.867656 234  
+[7]  {baguette,heineken}                  => {hering}   0.2137862 0.8199234  0.2607393 1.688772 214  
+[8]  {heineken,hering}                    => {baguette} 0.2137862 0.7430556  0.2877123 1.897445 214  
+[9]  {bourbon,heineken}                   => {cracker}  0.1508492 0.7190476  0.2097902 1.474932 151  
+[10] {coke,heineken,sardines}             => {ice_crea} 0.1168831 0.9750000  0.1198801 3.118131 117  
+[11] {heineken,ice_crea,sardines}         => {coke}     0.1168831 0.9512195  0.1228771 3.216793 117  
+[12] {coke,heineken,ice_crea}             => {sardines} 0.1168831 0.8417266  0.1388611 2.846515 117  
+[13] {coke,heineken,sardines}             => {chicken}  0.1158841 0.9666667  0.1198801 3.071852 116  
+[14] {chicken,heineken,sardines}          => {coke}     0.1158841 0.9747899  0.1188811 3.296502 116  
+[15] {chicken,coke,heineken}              => {sardines} 0.1158841 0.9830508  0.1178821 3.324439 116  
+
+
+
+## Plotting
+
+plot(rules)
+plot(rules, measure = c("support", "lift"), shading = "confidence")
+
+
+
