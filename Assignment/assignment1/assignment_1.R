@@ -10,7 +10,7 @@ library(arules)
 library(arulesViz)
 
 # Reading Data
-BNKSERV = read.transactions("C:/Users/jason/πŸ≈¡ »≠∏È/coding1/data_mining/Assignment/Assignment_1_Association Analysis/BNKSERV.csv", format = "single", cols = c(1,2), sep=",", skip=1, rm.duplicate=TRUE)
+BNKSERV = read.transactions("C:/Users/jason/πŸ≈¡ »≠∏È/coding1/data_mining/Assignment/assignment1/BNKSERV.csv", format = "single", cols = c(1,2), sep=",", skip=1, rm.duplicate=TRUE)
 inspect(BNKSERV)
 
 str(BNKSERV)
