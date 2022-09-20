@@ -12,6 +12,7 @@
 |3|Statistical Learning|
 |4|Association Analysis|
 |5|Predictive Modeling and Model Assessment|
+|6|Regression Model|
 
 ## Assignment
 |Num|Assignment|
