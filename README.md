@@ -18,5 +18,5 @@
 |Num|Assignment|
 |:------:|:-----:|
 |1|Association Analysis|
-
+|2|Regression|
 
