@@ -1,138 +1,73 @@
-data <- read.csv('C:/Users/jason/바탕 화면/coding1/data_mining/Assignment/assignment2/kyungsang_univ.csv', header=T)
+rm(list=ls())
+
+data <- read.csv('C:/Users/jason/바탕 화면/coding1/data_mining/Assignment/assignment2/kyungsang_univ_2.csv', header=T)
 head(data)
 tail(data)
 
-# X Value: data[, 3:22]
-# head(data[, 3:22])
-X_data <- data[, 3:22]
-head(X_data)
+## Here we do!!!
+train_data <- data[17521:26280, 3:23]
+head(train_data)
+tail(train_data)
 
-# Y Value: data[, 24]
-Y_data <- data[, 24]
-head(Y_data)
+test_data <- data[26281:35064, 3:23]
+head(test_data)
+tail(test_data)
+summary(test_data)
 
-# Split: Train & Test
-# Train: 2019
-# Test: 2020
-# 17520:26280
-X_train <- X_data[17520:26279,]
-head(X_train)
-tail(X_train)
+data_train_plus_test <- data[17521:35064, 3:23]
+summary(data_train_plus_test)
 
-Y_train <- Y_data[17520:26279]
-head(Y_train)
-tail(Y_train)
-
-X_test <- X_data[26280:35064,]
-head(X_test)
-tail(X_test)
-
-Y_test <- Y_data[26280:35064]
-head(Y_test)
-tail(Y_test)
-
-######
-library(MASS) 
-
-# 50th data: Outlier -> So Exclude this data
-i = which(Boston$medv == 50) 
-boston = Boston[-i,] # delete cases with medv=50
-
-# Factor: Qualitative 질적 변수로 적용하기 때문에 그렇다.
-boston$chas = factor(boston$chas)
-
-boston$rad = factor(boston$rad)
-
-## Model fitting
-fit.all = lm(medv ~ ., data = boston) # fit a linear model with all variables
-fit.step = step(fit.all, direction="both") # stepwise variable selection
+# Model Fitting
+fit.all <- lm(발전량 ~., data=train_data)
+fit.step = step(fit.all, direction='both')
 fit.step$anova
-summary(fit.step) # print the fitted model
+summary(fit.step)
 
-
-## Predicting
-
-yhat = predict(fit.step, newdata=boston, type="response") # predictions
+# Predicting
+yhat = predict(fit.step, newdata = test_data, type='response')
 head(yhat)
 
-plot(boston$medv, yhat, xlim=c(0,50), ylim=c(0,50), xlab="Observed Values", ylab="Fitted Values")
+plot(test_data$발전량, yhat, xlim=c(0, 750), ylim=c(0, 750))
 abline(a=0, b=1)
 
+# Evaluating
+mean((test_data$발전량 - yhat)^2) # MSE
+sqrt(mean((test_data$발전량 - yhat)^2)) # RMSE
+mean(abs(test_data$발전량 - yhat)) # MAE
+cor(test_data$발전량, yhat) # PCC
 
-## Evaluating
+### Computing the CV error
+V = 10
+mse.train = 0
+mse.test = 0
+mae.train = 0
+mae.test = 0
 
-mean((boston$medv - yhat)^2)  # MSE
-mean(abs(boston$medv - yhat)) # MAE
-
-
-
-###########################################
-# Computing the test error by paritioning
-
-
-## Data Partitioning 
-
-set.seed(1234)
-train.index = sample(1:nrow(boston), round(0.7*nrow(boston)))
-boston.train = boston[ train.index,] #train data                              
-boston.test  = boston[-train.index,] #test data
-
-
-## Model Fitting
-
-fit.reg = lm(medv ~ ., data = boston.train)
-fit.step.reg = step(fit.reg, direction="both", trace=FALSE) #Stepwise variable selection
-
-
-## Predicting and Evaluating
-
-yhat.reg = predict(fit.step.reg, newdata=boston.train, type="response")
-mean((boston.train$medv - yhat.reg)^2)  # train MSE
-mean(abs(boston.train$medv - yhat.reg)) # train MAE
-
-yhat.reg = predict(fit.step.reg, newdata=boston.test, type="response")
-mean((boston.test$medv - yhat.reg)^2)  # test MSE
-mean(abs(boston.test$medv - yhat.reg)) # test MAE
-
-
-
-
-##########################
-# Computing the CV error
-
-
-V = 10 #V-fold CV
-mse.train = 0; mse.test = 0
-mae.train = 0; mae.test = 0
-
-set.seed(1234)
-id = sample(1:V, nrow(boston), replace = T)
+set.seed(2017)
+id = sample(1:V, nrow(data_train_plus_test), replace=T)
 
 for(i in 1:V) {
-  
   print(i)
-
-  ## Data partitioning
-
+  
+  # Data Partitioning
   test.index = which(id==i)
-  boston.train = boston[-test.index,] #train data                              
-  boston.test  = boston[ test.index,] #test data
-
-  ## Fitting
-
-  fit.reg = lm(medv ~ ., data = boston.train)
-  fit.step.reg = step(fit.reg, direction="both", trace=FALSE) #Stepwise variable selection
-
-  ## Predicting and Evaluating
-
-  yhat.reg = predict(fit.step.reg, newdata=boston.test, type="response")
-  mse.test = mse.test + mean((boston.test$medv - yhat.reg)^2)  # MSE
-  mae.test = mae.test + mean(abs(boston.test$medv - yhat.reg)) # MAE
-
+  data.train = data_train_plus_test[-test.index,] # Train Data
+  data.test = data_train_plus_test[test.index,] # Test Data
+  
+  # Fitting
+  fit.reg = lm(발전량 ~., data=data.train)
+  fit.step.reg = step(fit.reg, direction='both', trace=FALSE) # Stepwise variable selection
+  
+  # Predicting and Evaluating
+  yhat.reg = predict(fit.step.reg, newdata = data.test, type='response')
+  mse.test = mse.test + mean((test_data$발전량 - yhat)^2) # MSE
+  mae.test = mae.test + mean(abs(test_data$발전량 - yhat)) # MAE
 }
 
-cv.mse.test  = mse.test/V;  cv.mse.test  # test CV MSE
-cv.mae.test  = mae.test/V;  cv.mae.test  # test CV MAE 
-##########
+cv.mse.test = mse.test/V
+cv.mae.test = mae.test/V
 
-#END
+cv.mse.test
+sqrt(cv.mse.test)
+cv.mae.test
+
