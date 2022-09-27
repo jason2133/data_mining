@@ -17,6 +17,9 @@ summary(test_data)
 data_train_plus_test <- data[17521:35064, 3:23]
 summary(data_train_plus_test)
 
+data_train_plus_test_only_y <- data[17521:35064, 23]
+summary(data_train_plus_test_only_y)
+
 # Model Fitting
 fit.all <- lm(발전량 ~., data=train_data)
 fit.step = step(fit.all, direction='both')
@@ -36,6 +39,23 @@ sqrt(mean((test_data$발전량 - yhat)^2)) # RMSE
 mean(abs(test_data$발전량 - yhat)) # MAE
 cor(test_data$발전량, yhat) # PCC
 
+### Time Series에 적합한 Cross-Validation을 해야 함.
+# tscv는 Univariate Time Series인걸로 보여짐.
+# 따라서 Multivariate Time Series를 하는 우리한테는 부적합한 것으로 사료됨.
+
+# library(caret)
+# library(ggplot2)
+# library(pls)
+# set.seed(2017)
+# summary(data_train_plus_test)
+# nrow(data_train_plus_test)
+
+# Step 1: Creating the timeslices for the index of the data
+#timeSlices <- createTimeSlices(1:nrow(data_train_plus_test), 
+#                               initialWindow = 36, horizon = 12, fixedWindow = TRUE)
+
+######################
+# Cross-Validation
 ### Computing the CV error
 V = 10
 mse.train = 0
@@ -70,4 +90,4 @@ cv.mae.test = mae.test/V
 cv.mse.test
 sqrt(cv.mse.test)
 cv.mae.test
-
+############################
