@@ -13,6 +13,7 @@
 |4|Association Analysis|
 |5|Predictive Modeling and Model Assessment|
 |6|Regression Model|
+|7|Neural Networks|
 
 ## Assignment
 |Num|Assignment|
