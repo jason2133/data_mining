@@ -14,10 +14,12 @@
 |5|Predictive Modeling and Model Assessment|
 |6|Regression Model|
 |7|Neural Networks|
+|8|Decision Tree|
 
 ## Assignment
 |Num|Assignment|
 |:------:|:-----:|
 |1|Association Analysis|
 |2|Regression|
+|3|Neural Networks & Decision Tree|
 
