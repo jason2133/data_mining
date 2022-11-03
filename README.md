@@ -15,6 +15,7 @@
 |6|Regression Model|
 |7|Neural Networks|
 |8|Decision Tree|
+|9|Ensembles|
 
 ## Assignment
 |Num|Assignment|
