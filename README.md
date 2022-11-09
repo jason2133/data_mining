@@ -16,6 +16,7 @@
 |7|Neural Networks|
 |8|Decision Tree|
 |9|Ensembles|
+|10|Project Presentation|
 
 ## Assignment
 |Num|Assignment|
