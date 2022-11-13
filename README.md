@@ -23,5 +23,5 @@
 |:------:|:-----:|
 |1|Association Analysis|
 |2|Regression|
-|3|Neural Networks & Decision Tree|
+|3|Neural Networks & Decision Tree</br>(+ Regressions)|
 
