@@ -16,7 +16,9 @@
 |7|Neural Networks|
 |8|Decision Tree|
 |9|Ensembles|
-|10|Project Presentation|
+|10|KNN|
+|11|LDA/QDA|
+|12|Project Presentation|
 
 ## Assignment
 |Num|Assignment|
@@ -24,4 +26,5 @@
 |1|Association Analysis|
 |2|Regression|
 |3|Neural Networks & Decision Tree</br>(+ Regressions)|
+|4|Boosting, Bagging, Random Forests, KNN, LDA/QDA, SVM 분석</br>(Regression Models, Neural Networks, Decision Trees 포함)|
 
