@@ -26,5 +26,5 @@
 |1|Association Analysis|
 |2|Regression|
 |3|Neural Networks & Decision Tree</br>(+ Regressions)|
-|4|Boosting, Bagging, Random Forests, KNN, LDA/QDA, SVM 분석</br>(+ Regression Models, Neural Networks, Decision Trees)|
+|4|Boosting, Bagging, Random Forests, KNN, LDA/QDA, SVM</br>(+ Regression Models, Neural Networks, Decision Trees)|
 
