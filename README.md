@@ -16,9 +16,10 @@
 |7|Neural Networks|
 |8|Decision Tree|
 |9|Ensembles|
-|10|KNN|
-|11|LDA/QDA|
-|12|Project Presentation|
+|10|K-Nearest Neighbors(KNN)|
+|11|Linear Discriminant Analysis(LDA)</br>Quadratic Discriminant Analysis(QDA)|
+|12|Support Vector Machine(SVM)|
+|13|Project Presentation|
 
 ## Assignment
 |Num|Assignment|
