@@ -19,7 +19,8 @@
 |10|K-Nearest Neighbors(KNN)|
 |11|Linear Discriminant Analysis(LDA)</br>Quadratic Discriminant Analysis(QDA)|
 |12|Support Vector Machine(SVM)|
-|13|Project Presentation|
+|13|Clustering|
+|14|Project Presentation|
 
 ## Assignment
 |Num|Assignment|
