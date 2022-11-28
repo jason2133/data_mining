@@ -1,0 +1,7 @@
+Diabets Data
+
+           x1 = 'relative weight'
+           x2 = 'fasting plasma glucose'
+           x3 = 'area under the plasma glucose curve (OGTT)'
+           x4 = 'area under plasma insulin curve (OGTT)'
+           x5 = 'steady state plasma glucose (SSPG)'   
