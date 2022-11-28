@@ -20,7 +20,7 @@
 |11|Linear Discriminant Analysis(LDA)</br>Quadratic Discriminant Analysis(QDA)|
 |12|Support Vector Machine(SVM)|
 |13|Clustering|
-|14|PCA|
+|14|Principal Component Analysis(PCA)|
 |15|Project Presentation|
 
 ## Assignment
