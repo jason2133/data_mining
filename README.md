@@ -30,4 +30,4 @@
 |2|Regression|
 |3|Neural Networks & Decision Tree</br>(+ Regressions)|
 |4|Boosting, Bagging, Random Forests, KNN, LDA/QDA, SVM</br>(+ Regression Models, Neural Networks, Decision Trees)|
-
+|5|Hierachical Clustering & K-means Clustering|
