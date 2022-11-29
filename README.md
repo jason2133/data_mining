@@ -1,6 +1,6 @@
 # Data Mining
 - Korea Univ. / Data Mining / STAT402 / 2022 Fall
-- Data Mining using R & 
+- Data Mining using R & Python
 - [Book](http://www.yes24.com/Product/Goods/107892918)
 - Lecture by Prof. Hyungjun Cho, Department of Statistics, Korea University
 
